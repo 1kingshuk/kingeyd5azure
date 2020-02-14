@@ -1,0 +1,47 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  creationTimestamp: null
+  labels:
+    app: kingd5dep
+  name: kingd5dep
+  namespace: kube-king
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: kingd5dep
+  strategy: {}
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: kingd5dep
+    spec:
+      containers:
+      - image: kingshuk10/kingd5:v1
+        name: kingd5
+        imagePullPolicy: Always        
+        resources: {}
+status: {}
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  creationTimestamp: null
+  labels:
+    app: kingd5depsvc1
+  name: kingd5depsvc1
+  namespace: kube-king
+spec:
+  ports:
+  - name: "80"
+    port: 80
+    protocol: TCP
+    targetPort: 80
+  selector:
+    app: kingd5dep
+  type: NodePort
+status:
+  loadBalancer: {}
